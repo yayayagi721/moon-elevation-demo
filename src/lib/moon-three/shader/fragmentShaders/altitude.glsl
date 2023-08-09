@@ -7,10 +7,12 @@ varying float vHeight;
 varying float vRatio;
 
 void main(){
-    vec3 color=mix(uDepthColor,uSurfaceColor,vHeight/uMaxHeight);
-    if(vHeight/uMaxHeight<vRatio && vRatio<(vHeight/uMaxHeight)+0.1){
-        gl_FragColor=vec4(color,1.);
+    // vec3 color=mix(uDepthColor,uSurfaceColor,vHeight/uMaxHeight);
+    float bandWidth=.05;
+    if(vHeight/uMaxHeight<vRatio&&vRatio<(vHeight/uMaxHeight)+bandWidth){
+        float a=smoothstep(vHeight/uMaxHeight,(vHeight/uMaxHeight)+bandWidth,vRatio);
+        gl_FragColor=vec4(uSurfaceColor,a);
     }else{
-        gl_FragColor=vec4(color,0.);
+        gl_FragColor=vec4(uSurfaceColor,0.);
     }
 }

@@ -1,16 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.scss";
-import App from "./components/features/app/App";
 import reportWebVitals from "./reportWebVitals";
-import Hoge from "./components/features/moonCanvas/MoonCanvas";
+import MainPage from "./components/pages/mainPage/MainPage";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
-    <Hoge />
+    <MainPage />
+    <style>
+      @import
+      url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+    </style>
   </React.StrictMode>
 );
 

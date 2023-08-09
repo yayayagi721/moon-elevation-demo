@@ -15,12 +15,10 @@ const initHeightSurfaceUniform = (gui: dat.GUI) => {
   const heightFolder = gui.addFolder("HeightSurface");
 
   const colors = {
-    depthColor: "#000000",
-    surfaceColor: "#cfe1ec",
+    surfaceColor: "#e8d930",
   };
 
   const uniforms = {
-    uDepthColor: { value: new THREE.Color(colors.depthColor) },
     uSurfaceColor: { value: new THREE.Color(colors.surfaceColor) },
     uHeightCoefficient: { value: 150 },
     uMaxHeight: { value: 1 },
@@ -31,8 +29,8 @@ const initHeightSurfaceUniform = (gui: dat.GUI) => {
   };
 
   document.onmousemove = function (e) {
-    uniforms.uMouse.value.x = e.pageX / window.innerWidth;
-    uniforms.uMouse.value.y = e.pageY / window.innerHeight;
+    uniforms.uMouse.value.x = 1 - e.pageX / window.innerWidth;
+    uniforms.uMouse.value.y = 1 - e.pageY / window.innerHeight;
   };
 
   heightFolder
@@ -42,15 +40,9 @@ const initHeightSurfaceUniform = (gui: dat.GUI) => {
     .step(0.001)
     .name("uHeightCoefficient");
 
-  heightFolder.addColor(colors, "depthColor").onChange(() => {
-    uniforms.uDepthColor.value.set(colors.depthColor);
-  });
-
   heightFolder.addColor(colors, "surfaceColor").onChange(() => {
     uniforms.uSurfaceColor.value.set(colors.surfaceColor);
   });
-
-  gui.show(true);
 
   return uniforms;
 };
@@ -60,13 +52,13 @@ const initUniforms = (gui: dat.GUI) => {
 
   const colors = {
     depthColor: "#000000",
-    surfaceColor: "#cfe1ec",
+    surfaceColor: "#98b2c3",
   };
 
   const uniforms = {
     uDepthColor: { value: new THREE.Color(colors.depthColor) },
     uSurfaceColor: { value: new THREE.Color(colors.surfaceColor) },
-    uHeightCoefficient: { value: 150 },
+    uHeightCoefficient: { value: 20 },
     uMaxHeight: { value: 1 },
     uMinHeight: { value: 1 },
   };
@@ -86,8 +78,6 @@ const initUniforms = (gui: dat.GUI) => {
     uniforms.uSurfaceColor.value.set(colors.surfaceColor);
   });
 
-  gui.show(true);
-
   return uniforms;
 };
 
@@ -96,7 +86,7 @@ const main = async (canvasId: string) => {
 
   const gui = new dat.GUI({ width: 300 });
 
-  gui.show(true);
+  gui.show(false);
 
   const heightSurfaceUniforms = initHeightSurfaceUniform(gui);
   const moonUniforms = initUniforms(gui);
@@ -127,10 +117,12 @@ const main = async (canvasId: string) => {
     1000
   );
 
-  camera.position.set(0, 0, 2);
+  camera.position.set(0, 0, 1);
   const scene = new THREE.Scene();
 
-  scene.background = new THREE.Color("#ACA7CB");
+  // scene.background = new THREE.Color("#284556");
+  // scene.background = new THREE.Color("#172b44");
+  scene.background = new THREE.Color("#362f57");
 
   window.addEventListener("resize", () => {
     sizes.width = window.innerWidth;
@@ -198,7 +190,7 @@ const main = async (canvasId: string) => {
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(sizes.width, sizes.height);
 
-  camera.position.z = 4;
+  camera.position.z = 3.2;
 
   const update = () => {
     renderer.render(scene, camera);

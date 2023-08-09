@@ -1,0 +1,40 @@
+.height-display {
+  pointer-events: none;
+
+  position: absolute;
+  height: 100%;
+  width: 100%;
+
+  span {
+    margin: 0px;
+    font-weight: bold;
+    color: white;
+  }
+
+  .left-top {
+    position: fixed;
+    top: 30px;
+    left: 50px;
+    span {
+      font-size: 54px;
+    }
+  }
+  .right-bottom {
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    width: 264px;
+    bottom: 74px;
+    right: 38px;
+    span {
+      line-height: 64px;
+      font-size: 64px;
+    }
+    .legend {
+      width: 7px;
+      height: 100px;
+      background: linear-gradient(#e8d930, transparent);
+    }
+  }
+}
