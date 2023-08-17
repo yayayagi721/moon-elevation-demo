@@ -1,19 +1,16 @@
 import { useEffect, useState } from "react";
 import "./Overlays.scss";
 import HeightDisplay from "../../ui/heightDisplay/HeightDisplay";
-import { getMaxHeight } from "../../../lib/moon-three/demRepository";
-
-const moonMaxElevationMeter = 10786;
+import { moonElevationService } from "../../../lib/moon-three/moonElevationService";
 
 function Overlays() {
   const [height, setHeight] = useState(0);
 
   useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      const bottom = moonMaxElevationMeter - getMaxHeight();
+    const handler = async (e: MouseEvent) => {
+      const service = await moonElevationService();
       const ratio = 1 - e.pageY / window.innerHeight;
-      const height = getMaxHeight();
-      setHeight(height * ratio + bottom);
+      setHeight(service.getElevationByRatio(ratio));
     };
 
     window.addEventListener("mousemove", handler);

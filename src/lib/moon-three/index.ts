@@ -1,4 +1,4 @@
-import { initMoonDEMData } from "./demRepository";
+import { moonElevationService } from "./moonElevationService";
 
 import * as dat from "lil-gui";
 
@@ -82,8 +82,6 @@ const initUniforms = (gui: dat.GUI) => {
 };
 
 const main = async (canvasId: string) => {
-  await initMoonDEMData();
-
   const gui = new dat.GUI({ width: 300 });
 
   gui.show(false);
@@ -95,8 +93,6 @@ const main = async (canvasId: string) => {
     width: window.innerWidth,
     height: window.innerHeight,
   };
-
-  // const canvas = document.querySelector( ".webgl" );
 
   const canvas: HTMLCanvasElement = document.querySelector(
     `#${canvasId}`
@@ -120,8 +116,6 @@ const main = async (canvasId: string) => {
   camera.position.set(0, 0, 1);
   const scene = new THREE.Scene();
 
-  // scene.background = new THREE.Color("#284556");
-  // scene.background = new THREE.Color("#172b44");
   scene.background = new THREE.Color("#362f57");
 
   window.addEventListener("resize", () => {
@@ -137,7 +131,11 @@ const main = async (canvasId: string) => {
 
   const moonResolution = 300;
 
-  const moonFactory = new MoonGeometryFactory(moonResolution);
+  const _moonElevationService = await moonElevationService();
+  const moonFactory = new MoonGeometryFactory(
+    moonResolution,
+    _moonElevationService
+  );
   const moonFaceGeometries = moonFactory.create(moonUniforms);
 
   moonFaceGeometries.forEach((face) => {
@@ -201,5 +199,3 @@ const main = async (canvasId: string) => {
 };
 
 export default main;
-
-// main("moon-canvas");
